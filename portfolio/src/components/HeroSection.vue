@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from "vue"
 import profile from "@/assets/profile.jpg"
 
 /* =========================
-   TYPEWRITER ROLES
+   TYPEWRITER ROLES (TS SAFE)
 ========================= */
 const roles = [
   { text: "Web Developer", color: "text-white" },
@@ -13,25 +13,33 @@ const roles = [
   { text: "RAG System Engineer", color: "text-indigo-300" },
   { text: "ML Automation Engineer", color: "text-cyan-300" },
   { text: "Logo & Digital Content Creator", color: "text-emerald-300" },
-]
+] as const
 
 const currentText = ref("")
 const currentColor = ref("text-white")
+
 let roleIndex = 0
 let charIndex = 0
 let isDeleting = false
 
 const typeEffect = () => {
-  const role = roles[roleIndex]
+  const role = roles[roleIndex % roles.length]
+
+  // ✅ HARD TS GUARD (THIS FIXES EVERYTHING)
+  if (!role) return
 
   if (!isDeleting) {
-    currentText.value = role.text.slice(0, ++charIndex)
+    charIndex++
+    currentText.value = role.text.slice(0, charIndex)
     currentColor.value = role.color
+
     if (charIndex === role.text.length) {
       setTimeout(() => (isDeleting = true), 1200)
     }
   } else {
-    currentText.value = role.text.slice(0, --charIndex)
+    charIndex--
+    currentText.value = role.text.slice(0, charIndex)
+
     if (charIndex === 0) {
       isDeleting = false
       roleIndex = (roleIndex + 1) % roles.length
@@ -40,6 +48,7 @@ const typeEffect = () => {
 
   setTimeout(typeEffect, isDeleting ? 40 : 80)
 }
+
 
 /* =========================
    SCROLL PARALLAX
@@ -51,15 +60,18 @@ onMounted(() => {
   typeEffect()
   window.addEventListener("scroll", onScroll)
 })
-onUnmounted(() => window.removeEventListener("scroll", onScroll))
+onUnmounted(() => {
+  window.removeEventListener("scroll", onScroll)
+})
 </script>
 
 <template>
-  <section id="home"
+  <section
+    id="home"
     class="relative min-h-screen bg-black text-white overflow-hidden
            flex items-center justify-center px-4 sm:px-6"
   >
-    <!-- BACKGROUND BLOBS (NON-CLICKABLE) -->
+    <!-- BACKGROUND BLOBS -->
     <div
       class="blob left bg-gradient-to-r from-indigo-600/40 to-violet-600/40"
       :style="{ transform: `translateX(${scrollY * 0.15}px)` }"
@@ -76,7 +88,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
              grid grid-cols-1 md:grid-cols-2
              gap-12 items-center"
     >
-      <!-- IMAGE FIRST ON MOBILE -->
+      <!-- IMAGE -->
       <div
         class="relative flex justify-center md:justify-end perspective
                order-1 md:order-2"
@@ -91,14 +103,12 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
       <!-- TEXT -->
       <div
         class="text-center md:text-left
-               order-2 md:order-1
-               transition-all duration-300"
+               order-2 md:order-1"
         :style="{
           transform: `translateY(-${scrollY * 0.15}px)`,
           opacity: `${1 - scrollY / 700}`
         }"
       >
-        <!-- TITLE -->
         <h1
           class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl
                  font-semibold tracking-tight leading-tight"
@@ -114,33 +124,26 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
           </span>
         </h1>
 
-        <!-- IDENTITY LINE -->
-        <p
-          class="mt-6 text-sm sm:text-base
-                 text-neutral-400 tracking-wide"
-        >
+        <p class="mt-6 text-sm sm:text-base text-neutral-400 tracking-wide">
           Freelancer · YouTuber · Content Creator · B.Tech Student · Software Engineer
         </p>
 
-        <!-- CTA -->
         <div
           class="mt-8 flex flex-col sm:flex-row
                  gap-4 justify-center md:justify-start"
         >
-          <!-- VIEW WORK (FIXED) -->
-         <a
-  href="#featured-work"
-  class="relative z-20 inline-flex items-center justify-center
-         px-8 py-3 bg-white text-black rounded-lg
-         font-medium hover:bg-neutral-200 transition"
->
-  View Work
-</a>
-
+          <a
+            href="#featured-work"
+            class="inline-flex items-center justify-center
+                   px-8 py-3 bg-white text-black rounded-lg
+                   font-medium hover:bg-neutral-200 transition"
+          >
+            View Work
+          </a>
 
           <a
             href="#contact"
-            class="relative z-20 px-8 py-3 border border-white/20 rounded-lg
+            class="px-8 py-3 border border-white/20 rounded-lg
                    hover:bg-white/5 transition"
           >
             Contact
@@ -152,14 +155,13 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
 </template>
 
 <style scoped>
-/* ===== BACKGROUND BLOBS ===== */
 .blob {
   position: absolute;
   width: 420px;
   height: 420px;
   filter: blur(140px);
   border-radius: 9999px;
-  pointer-events: none; /* 🔑 FIX */
+  pointer-events: none;
 }
 .blob.left {
   top: 25%;
@@ -170,7 +172,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
   right: -15%;
 }
 
-/* ===== 3D IMAGE ===== */
 .perspective {
   perspective: 1200px;
 }
@@ -185,7 +186,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
   border: 1px solid rgba(255, 255, 255, 0.15);
   transform: rotateY(-10deg) rotateX(6deg);
   animation: float 6s ease-in-out infinite;
-  z-index: 2;
 }
 
 @media (min-width: 768px) {
@@ -201,7 +201,6 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
   object-fit: cover;
 }
 
-/* ===== RING ===== */
 .ring {
   position: absolute;
   width: 340px;
@@ -210,10 +209,9 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
   border: 1px solid rgba(255, 255, 255, 0.2);
   animation: spin 18s linear infinite;
   transform: rotateX(70deg);
-  pointer-events: none; /* 🔑 FIX */
+  pointer-events: none;
 }
 
-/* ===== ANIMATIONS ===== */
 @keyframes float {
   0%, 100% {
     transform: rotateY(-10deg) rotateX(6deg) translateY(0);
