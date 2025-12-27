@@ -55,7 +55,7 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
 </script>
 
 <template>
-  <section
+  <section id="home"
     class="relative min-h-screen bg-black text-white overflow-hidden
            flex items-center justify-center px-4 sm:px-6"
   >
@@ -138,12 +138,13 @@ onUnmounted(() => window.removeEventListener("scroll", onScroll))
 </a>
 
 
-          <button
+          <a
+            href="#contact"
             class="relative z-20 px-8 py-3 border border-white/20 rounded-lg
                    hover:bg-white/5 transition"
           >
             Contact
-          </button>
+          </a>
         </div>
       </div>
     </div>

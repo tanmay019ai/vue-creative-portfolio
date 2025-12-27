@@ -35,62 +35,83 @@ const profiles = [
 </script>
 
 <template>
-  <section class="bg-black text-white py-28 px-4 sm:px-6">
+  <section id="online-presence" class="bg-black text-white py-20 px-4 sm:px-6">
     <div class="max-w-6xl mx-auto">
 
-      <!-- TITLE -->
-      <h2 class="text-3xl sm:text-4xl font-semibold text-center">
-        Online Presence
-      </h2>
+      <!-- TWO-COLUMN GRID (CONTROLLED GAP) -->
+      <div
+        class="grid grid-cols-[1fr_auto]
+               gap-6 sm:gap-8 md:gap-10
+               items-start"
+      >
 
-      <p class="mt-4 text-neutral-400 text-center max-w-3xl mx-auto">
-        I actively build, solve problems, and share my learning across platforms.
-      </p>
+        <!-- LEFT: ONLINE PRESENCE -->
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-semibold">
+            Online Presence
+          </h2>
 
-      <!-- LOGO GRID -->
-      <div class="mt-12 flex flex-wrap justify-center gap-10">
-        <a
-          v-for="p in profiles"
-          :key="p.name"
-          :href="p.url"
-          target="_blank"
-          class="group flex flex-col items-center gap-2"
-        >
-          <div
-            class="w-16 h-16 bg-white rounded-xl flex items-center justify-center
-                   group-hover:scale-105 transition"
-          >
-            <img
-              :src="p.icon"
-              :alt="p.name"
-              class="w-8 h-8 object-contain"
-            />
+          <p class="mt-3 text-sm sm:text-base text-neutral-400 max-w-md">
+            I actively build, solve problems, and share my learning across platforms.
+          </p>
+
+          <!-- LOGOS -->
+          <div class="mt-8 flex flex-wrap gap-5">
+            <a
+              v-for="p in profiles"
+              :key="p.name"
+              :href="p.url"
+              target="_blank"
+              class="group flex flex-col items-center gap-1"
+            >
+              <div
+                class="w-12 h-12 sm:w-14 sm:h-14
+                       bg-white rounded-xl flex items-center justify-center
+                       group-hover:scale-105 transition"
+              >
+                <img
+                  :src="p.icon"
+                  :alt="p.name"
+                  class="w-6 h-6 sm:w-7 sm:h-7 object-contain"
+                />
+              </div>
+              <span class="text-[11px] sm:text-xs text-neutral-400">
+                {{ p.name }}
+              </span>
+            </a>
           </div>
-          <span class="text-sm text-neutral-400">
-            {{ p.name }}
-          </span>
-        </a>
-      </div>
-
-      <!-- RESUME EMBED -->
-      <div class="mt-20">
-        <h3 class="text-2xl font-semibold text-center mb-6">
-          Resume
-        </h3>
-
-        <div
-          class="w-full max-w-4xl mx-auto border border-white/10 rounded-xl overflow-hidden"
-        >
-          <iframe
-            src="/resume.pdf"
-            class="w-full h-[600px]"
-            frameborder="0"
-          ></iframe>
         </div>
 
-        <p class="mt-4 text-center text-sm text-neutral-500">
-          Scroll to view · Download using browser controls
-        </p>
+        <!-- RIGHT: RESUME -->
+        <div class="flex flex-col items-center">
+          <h3 class="text-lg sm:text-xl font-semibold mb-4">
+            Resume
+          </h3>
+
+          <div
+            class="bg-white border border-white/10 rounded-lg
+                   overflow-hidden
+                   w-[180px] sm:w-[220px] md:w-[260px]"
+          >
+            <img
+              src="@/assets/resume/resume-preview.png"
+              alt="Resume Preview"
+              class="w-full h-auto object-contain"
+            />
+          </div>
+
+          <div class="mt-4">
+            <a
+              href="/resume.pdf"
+              download
+              class="inline-block px-5 py-2 bg-white text-black rounded-md
+                     text-sm font-medium hover:bg-neutral-200 transition"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+
       </div>
 
     </div>

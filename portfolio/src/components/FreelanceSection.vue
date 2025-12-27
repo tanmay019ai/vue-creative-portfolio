@@ -7,7 +7,7 @@ const freelancerProfile =
 </script>
 
 <template>
-  <section class="bg-black text-white py-28 px-4 sm:px-6">
+  <section id="freelance" class="bg-black text-white py-28 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto">
 
       <!-- TITLE -->
