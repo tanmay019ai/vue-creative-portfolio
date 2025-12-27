@@ -1,5 +1,13 @@
+<script setup lang="ts">
+import HeroSection from "@/components/HeroSection.vue"
+import FeaturedWorkSection from "@/components/FeaturedWorkSection.vue"
+import FreelanceSection from "@/components/FreelanceSection.vue"
+import ProfilesSection from "@/components/ProfilesSection.vue"
+</script>
+
 <template>
-  <h1 class="text-3xl font-bold text-blue-600">
-    Tailwind 3.0 working
-  </h1>
+  <HeroSection />
+  <FeaturedWorkSection />
+  <FreelanceSection />
+  <ProfilesSection />
 </template>
