@@ -19,7 +19,8 @@ const links = [
            border-b border-white/10"
   >
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="h-16 flex items-center justify-end relative">
+      <!-- NAV BAR -->
+      <div class="h-12 flex items-center justify-end relative">
 
         <!-- DESKTOP NAV -->
         <nav
@@ -36,19 +37,19 @@ const links = [
           </a>
         </nav>
 
-        <!-- MOBILE BUTTON -->
+        <!-- MOBILE MENU BUTTON -->
         <button
-          class="md:hidden text-white text-2xl ml-2"
+          class="md:hidden text-white text-xl ml-2"
           @click="open = !open"
           aria-label="Menu"
         >
           ☰
         </button>
 
-        <!-- MOBILE DROPDOWN (RIGHT SIDE ONLY) -->
+        <!-- MOBILE DROPDOWN -->
         <div
           v-if="open"
-          class="absolute top-16 right-0
+          class="absolute top-12 right-0
                  w-48
                  bg-black/95 backdrop-blur-xl
                  border border-white/10

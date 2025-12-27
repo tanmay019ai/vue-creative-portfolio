@@ -109,6 +109,9 @@ onUnmounted(() => {
           opacity: `${1 - scrollY / 700}`
         }"
       >
+      <p class="mb-3 text-sm sm:text-base text-neutral-400 tracking-widest uppercase">
+    Hi, I’m <span class="text-white font-medium">Tanmay</span>
+  </p>
         <h1
           class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl
                  font-semibold tracking-tight leading-tight"
